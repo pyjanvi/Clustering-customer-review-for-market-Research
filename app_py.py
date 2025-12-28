@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1SNGL5eK8Fny_XKiUM-ZgEvwSxbmHz7S_
 """
 
-pip install streamlit
-
 import pandas as pd
 customer_data = pd.read_csv("customer_review_clusters.csv")
 customer_data
@@ -27,7 +25,7 @@ st.set_page_config(
 # -----------------------------
 # Title
 # -----------------------------
-st.title("🛍️ Customer Review Clustering for Market Research")
+st.title("Customer Review Clustering for Market Research")
 st.write(
     "This Streamlit app displays clustered customer reviews generated using "
     "Machine Learning (K-Means)."
@@ -42,7 +40,7 @@ def load_data():
         df = pd.read_csv("customer_review_clusters.csv")
         return df
     except FileNotFoundError:
-        st.error("❌ customer_review_clusters.csv file not found in the project folder.")
+        st.error("customer_review_clusters.csv file not found in the project folder.")
         st.stop()
 
 df = load_data()
@@ -54,7 +52,7 @@ required_columns = ["review_content", "cluster"]
 
 for col in required_columns:
     if col not in df.columns:
-        st.error(f"❌ Required column missing: {col}")
+        st.error(f"Required column missing: {col}")
         st.stop()
 
 # -----------------------------
@@ -62,7 +60,7 @@ for col in required_columns:
 # -----------------------------
 if "cluster_name" not in df.columns:
     st.warning(
-        "⚠️ 'cluster_name' column not found. "
+        "'cluster_name' column not found. "
         "Using numeric cluster labels instead."
     )
     df["cluster_name"] = df["cluster"].astype(str)
@@ -70,7 +68,7 @@ if "cluster_name" not in df.columns:
 # -----------------------------
 # Sidebar Filters
 # -----------------------------
-st.sidebar.header("🔍 Filters")
+st.sidebar.header("Filters")
 
 cluster_names = sorted(df["cluster_name"].unique())
 
@@ -82,7 +80,7 @@ selected_cluster = st.sidebar.selectbox(
 # -----------------------------
 # Dataset Preview
 # -----------------------------
-st.subheader("📊 Clustered Dataset Preview")
+st.subheader("Clustered Dataset Preview")
 st.dataframe(df.head(20), use_container_width=True)
 
 # -----------------------------
@@ -90,7 +88,7 @@ st.dataframe(df.head(20), use_container_width=True)
 # -----------------------------
 filtered_df = df[df["cluster_name"] == selected_cluster]
 
-st.subheader(f"🧠 Reviews in Cluster: **{selected_cluster}**")
+st.subheader(f"Reviews in Cluster: **{selected_cluster}**")
 st.write(f"Total Reviews: **{len(filtered_df)}**")
 
 # -----------------------------
